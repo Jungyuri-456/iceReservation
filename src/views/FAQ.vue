@@ -5,8 +5,12 @@
       <input
         type="text"
         v-model="searchQuery"
+<<<<<<< HEAD
         placeholder="검색어를 입력하세요."
         @input="filterFAQs" />
+=======
+        placeholder="검색어를 입력하세요." />
+>>>>>>> 77a10c6 (제빙기예약 사이트 연습)
     </div>
     <div class="faq-categories">
       <button
@@ -18,6 +22,7 @@
       </button>
     </div>
     <div class="faq-list">
+<<<<<<< HEAD
         <div v-for="faq in faqs" :key="faqs.id" class="faq-item">
             <div class="faq-question" @click="toggleFAQ(faq.id)">
                 <h3>{{ faq.question }}</h3>
@@ -27,16 +32,47 @@
                 <p>{{ faq.answer }}</p>
             </div>
         </div>
+=======
+      <div v-for="faq in filteredFAQs" :key="faq.id" class="faq-item">
+        <div class="faq-question" @click="toggleFAQ(faq.id)">
+          <h3>{{ faq.question }}</h3>
+          <span class="toggle-icon">{{
+            activeIndex === faq.id ? "▼" : "▶"
+          }}</span>
+        </div>
+        <div class="faq-answer" v-show="activeIndex === faq.id">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+      <div v-if="filteredFAQs.length === 0" class="no-result">
+        검색 결과 없습니다.
+      </div>
+      <div class="contact-section">
+        <p>원하는 답변을 찾지 못하셨나요?</p>
+        <router-link to="/contact" class="contact-btn">문의하기</router-link>
+      </div>
+>>>>>>> 77a10c6 (제빙기예약 사이트 연습)
     </div>
   </div>
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { reactive, ref } from 'vue';
 
 //  검색어와 선택된 카테고리 상태 정의
 const searchQuery = ref("")
 const selectedCategory = ref("all")
+=======
+import { ref, reactive, computed } from "vue";
+const activeIndex = ref(null);
+// 검색어와 선택된 카테고리 상태 정의
+const searchQuery = ref("");
+const selectedCategory = ref("all");
+function selectedCategory1(categoryId) {
+  selectedCategory.value = categoryId;
+}
+>>>>>>> 77a10c6 (제빙기예약 사이트 연습)
 // 카테고리 목록 정의
 const categories = [
   { id: "all", name: "전체" },
@@ -112,6 +148,7 @@ const faqs = reactive([
     isOpen: false,
   },
 ]); // reactive로 객체 배열 전체를 반응형으로 처리
+<<<<<<< HEAD
 //  질문 열고 닫기
 function toggleFAQ(id){
     const faq = faqs.find((f)=>f.id === id)
@@ -121,6 +158,23 @@ function toggleFAQ(id){
 }
 </script>
 
+=======
+// 질문 열고 닫기 (아코디언 기능)
+function toggleFAQ(id) {
+  activeIndex.value = activeIndex.value === id ? null : id;
+}
+// 필터링된 FAQ 목록 계산
+const filteredFAQs = computed(() => {
+ return faqs.filter(
+    (faq) =>
+      (selectedCategory.value === "all" ||
+        faq.category === selectedCategory.value) &&
+      (faq.question.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.value.toLowerCase()))
+  );
+});
+</script>
+>>>>>>> 77a10c6 (제빙기예약 사이트 연습)
 <style scoped>
 .faq {
   max-width: 800px;
@@ -212,5 +266,55 @@ h2 {
   line-height: 1.6;
   color: #666;
 }
+<<<<<<< HEAD
 
+=======
+/* 문의하기 */
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.contact-section {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.contact-section p {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.contact-btn:hover {
+  background: #45a049;
+}
+
+@media (max-width: 768px) {
+  .faq {
+    padding: 1rem;
+  }
+
+  .faq-categories {
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+>>>>>>> 77a10c6 (제빙기예약 사이트 연습)
 </style>
