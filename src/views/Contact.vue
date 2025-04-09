@@ -1,11 +1,4 @@
 <template>
-<<<<<<< HEAD
-Contact페이지
-</template>
-
-<style scoped>
-
-=======
   <div class="contact">
     <h2>문의하기</h2>
     <div class="contact-container">
@@ -146,57 +139,7 @@ Contact페이지
     </div>
   </div>
 </template>
-<script setup>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-const showConfirmModal = ref(false); //문의 확인 모달
-const imagePreviewUrl = ref(null); //이미지 미리보기 URL
-const showImageModal = ref(false); //이미지 모달
-const selectedImage = ref(null); //선택된 이미지
-const formData = ref({
-  category: "",
-  name: "",
-  email: "",
-  phone: "",
-  title: "",
-  content: "",
-  file: null,
-  agreePrivacy: false,
-});
-function submitInquiry() {
-  showConfirmModal.value = true;
-}
-// 문의 카테고리 변환
-function getCategoryName(category) {
-  const categoryMap = {
-    reservation: "예약 관련",
-    service: "서비스 관련",
-    payment: "결제 관련",
-    cancellation: "취소/환불",
-    etc: "기타 문의",
-  };
-  return categoryMap[category] || category;
-}
-// 이미지 파일 여부 판단
-const isImageFile = computed(() =>
-  formData.value.file ? formData.value.file.type.startsWith("image/") : false
-);
-// 파일 업로그 처리
-function hadleFileUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    formData.value.file = file;
-    if (file.type.startsWith("image/")) {
-      imagePreviewUrl.value = URL.createObjectURL(file);
-    }
-  }
-}
-function confirmSubmit() {
-  alert("문의가 접수 되었습니다. 빠른시일내에 답변 드리겠습니다.");
-  router.push("/");
-}
-</script>
+
 <style scoped>
 .contact {
   max-width: 800px;
@@ -622,7 +565,58 @@ textarea {
 .submit-btn:hover {
   background-color: #0056b3;
 }
-/* 커밋되는지 */
-/* 커밋확인 */
->>>>>>> 77a10c6 (제빙기예약 사이트 연습)
 </style>
+
+
+<script setup>
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const showConfirmModal = ref(false); //문의 확인 모달
+const imagePreviewUrl = ref(null); //이미지 미리보기 URL
+const showImageModal = ref(false); //이미지 모달
+const selectedImage = ref(null); //선택된 이미지
+const formData = ref({
+  category: "",
+  name: "",
+  email: "",
+  phone: "",
+  title: "",
+  content: "",
+  file: null,
+  agreePrivacy: false,
+});
+function submitInquiry() {
+  showConfirmModal.value = true;
+}
+// 문의 카테고리 변환
+function getCategoryName(category) {
+  const categoryMap = {
+    reservation: "예약 관련",
+    service: "서비스 관련",
+    payment: "결제 관련",
+    cancellation: "취소/환불",
+    etc: "기타 문의",
+  };
+  return categoryMap[category] || category;
+}
+// 이미지 파일 여부 판단
+const isImageFile = computed(() =>
+  formData.value.file ? formData.value.file.type.startsWith("image/") : false
+);
+// 파일 업로그 처리
+function hadleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    formData.value.file = file;
+    if (file.type.startsWith("image/")) {
+      imagePreviewUrl.value = URL.createObjectURL(file);
+    }
+  }
+}
+function confirmSubmit() {
+  alert("문의가 접수 되었습니다. 빠른시일내에 답변 드리겠습니다.");
+  router.push("/");
+}
+</script>
+
